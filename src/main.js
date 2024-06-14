@@ -10,17 +10,24 @@ const loading = document.querySelector('.loading-img');
 
 submitBtn.addEventListener('click', () => {
   const value = input.value.trim();
+
+ if (!value) {
+    iziToast.warning({
+      title: 'Warning',
+      message: 'Please fill the search field first.',
+      position: 'topRight',
+    }); // add iziToast
+    input.value = '';
+    return;
+  }
+
   const amountOfImages = prompt(
     'How many images do you want me to show?',
     '10'
   );
   const numberOfImages = Number(amountOfImages);
 
-  if (!value) {
-    console.log('Error'); // add iziToast
-    content.innerHTML = '';
-    return;
-  }
+ 
 
   if (!numberOfImages || numberOfImages <= 0) {
     iziToast.error({
@@ -39,17 +46,8 @@ submitBtn.addEventListener('click', () => {
     })
     .catch(error => {
       loading.classList.remove('visible');
-      iziToast.warning({
-        message:
-          'Sorry, there was an error fetching images. Please try again later.',
-        position: 'topRight',
-        maxWidth: '400px',
-        color: '#b90e0a',
-        messageColor: '#fff',
-        messageLineHeight: '150%',
-        messageSize: '16px',
-      });
       console.error('Error fetching images:', error);
+      input.value = '';
     })
     .finally(() => {
       //anyway

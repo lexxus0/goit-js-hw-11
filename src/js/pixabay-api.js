@@ -1,4 +1,8 @@
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
 const API_KEY = '44377249-dc3d438c16ab3b76144728d61';
+const input = document.getElementById('photos_input');
 
 export function fetchImages(query, numberOfImages) {
   const preview = new URLSearchParams({
